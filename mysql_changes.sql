@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.53-38.5, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.54-38.7, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: MCP
 -- ------------------------------------------------------
--- Server version	5.5.53-38.5
+-- Server version	5.5.54-38.7
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -71,7 +71,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$20000$Q5W0ioBkedz7$8BTysBqBd1mbB6SfSY7iHawGLOsXsVujFFtpwYwzsyE=','2017-04-05 10:24:25',1,'ferg','Fergus','McGlynn','fergus.a.mcglynn@york.ac.uk',1,1,'2016-12-13 14:57:45'),(2,'pbkdf2_sha256$20000$6B9gZ0YvX3Cc$VJzG0v5+wmZ6Caz0AqLiSOsqiUesKxo3BaBNGstJHDA=',NULL,1,'am_robot','Archivematica','Robot','fergus.a.mcglynn@york.ac.uk',1,1,'2016-12-13 15:10:59');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$20000$Q5W0ioBkedz7$8BTysBqBd1mbB6SfSY7iHawGLOsXsVujFFtpwYwzsyE=','2017-04-06 13:48:39',1,'ferg','Fergus','McGlynn','fergus.a.mcglynn@york.ac.uk',1,1,'2016-12-13 14:57:45'),(2,'pbkdf2_sha256$20000$6B9gZ0YvX3Cc$VJzG0v5+wmZ6Caz0AqLiSOsqiUesKxo3BaBNGstJHDA=','2017-04-06 13:13:08',1,'am_robot','Archivematica','Robot','fergus.a.mcglynn@york.ac.uk',1,1,'2016-12-13 15:10:59');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +103,62 @@ LOCK TABLES `tastypie_apikey` WRITE;
 INSERT INTO `tastypie_apikey` VALUES (1,'ca5801b1f881c015da7f2aa55815dbf3fa28bad7','2016-12-13 14:57:45',1),(2,'b873788e67fd691ddc571fd74dc0d58b897a3d23','2016-12-13 15:10:59',2);
 /*!40000 ALTER TABLE `tastypie_apikey` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `Agents`
+--
+
+DROP TABLE IF EXISTS `Agents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agents` (
+  `pk` int(11) NOT NULL AUTO_INCREMENT,
+  `agentIdentifierType` longtext COLLATE utf8_unicode_ci,
+  `agentIdentifierValue` longtext COLLATE utf8_unicode_ci,
+  `agentName` longtext COLLATE utf8_unicode_ci,
+  `agentType` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agents`
+--
+
+LOCK TABLES `Agents` WRITE;
+/*!40000 ALTER TABLE `Agents` DISABLE KEYS */;
+INSERT INTO `Agents` VALUES (1,'preservation system','Archivematica-1.6.0','Archivematica','software'),(2,'repository code','ORG','Your Organization Name Here','organization'),(3,'Archivematica user pk','1','username=\"ferg\", first_name=\"Fergus\", last_name=\"McGlynn\"','Archivematica user'),(4,'Archivematica user pk','2','username=\"am_robot\", first_name=\"Archivematica\", last_name=\"Robot\"','Archivematica user');
+/*!40000 ALTER TABLE `Agents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `main_userprofile`
+--
+
+DROP TABLE IF EXISTS `main_userprofile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `main_userprofile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `agent_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `agent_id` (`agent_id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `main_userprofile_agent_id_7ff4bb0b0eda6716_fk_Agents_pk` FOREIGN KEY (`agent_id`) REFERENCES `Agents` (`pk`),
+  CONSTRAINT `main_userprofile_user_id_75cd56861240b8f7_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `main_userprofile`
+--
+
+LOCK TABLES `main_userprofile` WRITE;
+/*!40000 ALTER TABLE `main_userprofile` DISABLE KEYS */;
+INSERT INTO `main_userprofile` VALUES (1,3,1),(2,4,2);
+/*!40000 ALTER TABLE `main_userprofile` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -113,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-05 13:20:41
+-- Dump completed on 2017-04-06 15:11:16

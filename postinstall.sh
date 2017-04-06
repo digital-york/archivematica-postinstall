@@ -14,7 +14,6 @@ echo "Processing configuration files deployed"
 # install UoY version of automation tools
 cd /usr/lib/archivematica
 sudo git clone https://github.com/digital-york/automation-tools.git
-sudo git checkout master
 cd automation-tools
 sudo mkdir /usr/share/python/automation-tools
 cd /usr/share/python/automation-tools

@@ -9,7 +9,8 @@ sudo chown archivematica:archivematica /var/archivematica/storage-service/storag
 echo "Storage Service database replaced"
 # put the processing configuration files in place
 sudo cp ./defaultProcessingMCP.xml ./datasetsProcessingMCP.xml /var/archivematica/sharedDirectory/sharedMicroServiceTasksConfigs/processingMCPConfigs/
-sudo chown archivematica:archivematica /var/archivematica/sharedDirectory/sharedMicroServiceTasksConfigs/processingMCPConfigs/*
+sudo chown archivematica:archivematica /var/archivematica/sharedDirectory/sharedMicroServiceTasksConfigs/processingMCPConfigs/defaultProcessingMCP.xml
+sudo chown archivematica:archivematica /var/archivematica/sharedDirectory/sharedMicroServiceTasksConfigs/processingMCPConfigs/datasetsProcessingMCP.xml
 echo "Processing configuration files deployed"
 # install UoY version of automation tools
 cd /usr/lib/archivematica
